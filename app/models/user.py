@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Float
 from app.database import Base
 from sqlalchemy.orm import relationship
 
@@ -12,4 +12,7 @@ class User(Base):
     password = Column(String, nullable=False)
 
     predictions = relationship("Prediction", back_populates="user")
+
+    total_score = Column(Float, default=0.0)  # cumulative score across predictions
+    balance = Column(Float, default=0.0)
 

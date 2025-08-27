@@ -7,8 +7,6 @@ from app.utils.security import hash_password, verify_password, create_access_tok
 from app.schemas.user import UserCreate, UserOut
 from fastapi.security import OAuth2PasswordRequestForm
 
-# Create tables if not exist
-Base.metadata.create_all(bind=engine)
 
 router = APIRouter()
 

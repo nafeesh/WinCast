@@ -9,9 +9,10 @@ class Prediction(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     event_id = Column(Integer, ForeignKey("events.id"))
-    option_key = Column(String, nullable=False)
+    predicted_value = Column(String, nullable=False)
     score = Column(Float, default=0.0)  # accuracy score
     entries = Column(Integer, default=0)  # tickets earned
+    submitted_at = Column(DateTime, nullable=True, default=datetime.now)
 
     user = relationship("User", back_populates="predictions")
     event = relationship("Event", back_populates="predictions")

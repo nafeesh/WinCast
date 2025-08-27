@@ -11,10 +11,13 @@ class Event(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
     category = Column(String, nullable=False)   # e.g., sports, finance, movies, weather
+    # Need to improve this logic null true or out of option should be allowed
     options = Column(JSON, nullable=False)      # list[{"key": "A", "label": "271–290"}]
     start_time = Column(DateTime, nullable=False, default=datetime.now)
     end_time = Column(DateTime, nullable=False)
     is_closed = Column(Boolean, default=False)
 
     predictions = relationship("Prediction", back_populates="event")
+    correct_value = Column(String, nullable=True)  # ✅ store outcome
+    # winners = relationship("Winner", back_populates="event", cascade="all, delete")
 

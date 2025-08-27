@@ -8,10 +8,12 @@ from app.schemas.prediction import PredictionCreate, PredictionOut
 from app.utils.deps import get_current_user
 from app.models.user import User
 
-Base.metadata.create_all(bind=engine)
 router = APIRouter()
 
-@router.post("/", response_model=PredictionOut, status_code=status.HTTP_201_CREATED)
+ENTRY_FEE = 10  # flat fee
+
+
+@router.post("/", response_model=PredictionCreate, status_code=status.HTTP_201_CREATED)
 def submit_prediction(payload: PredictionCreate, 
                       db: Session = Depends(get_db),
                       user: User = Depends(get_current_user)):
@@ -24,10 +26,11 @@ def submit_prediction(payload: PredictionCreate,
     if event.is_closed or now >= event.end_time:
         raise HTTPException(status_code=400, detail="Event is closed for predictions")
 
-    # Validate option exists
+    # Validate option exists 
+    # This logic needs to be improve it shpuld allow predictions if event has no option kind
     valid_keys = {opt["key"] for opt in event.options}
-    if payload.option_key not in valid_keys:
-        raise HTTPException(status_code=400, detail="Invalid option_key for this event")
+    if payload.predicted_value not in valid_keys:
+        raise HTTPException(status_code=400, detail="Invalid predictions for this event")
 
     # Enforce one prediction per user/event
     existing = db.query(Prediction).filter(
@@ -36,17 +39,27 @@ def submit_prediction(payload: PredictionCreate,
     if existing:
         raise HTTPException(status_code=400, detail="You already submitted a prediction for this event")
 
+    # 3. Deduct entry fee
+    balance = user.balance - ENTRY_FEE
+    if balance <= 0:
+        raise HTTPException(status_code=400, detail="Insufficent Balance")
+    
+    user.balance -= ENTRY_FEE
+
+
+
     pred = Prediction(
         user_id=user.id,
         event_id=event.id,
-        option_key=payload.option_key,
+        predicted_value=payload.predicted_value,
     )
     db.add(pred)
+    db.add(user)
     db.commit()
     db.refresh(pred)
+    db.refresh(user)
     return pred
 
 @router.get("/me", response_model=list[PredictionOut])
 def my_predictions(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    return db.query(Prediction).filter(Prediction.user_id == user.id) \
-             .order_by(Prediction.submitted_at.desc()).all()
+    return db.query(Prediction).filter(Prediction.user_id == user.id)

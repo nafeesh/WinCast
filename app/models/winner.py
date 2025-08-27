@@ -1,0 +1,16 @@
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, func
+from sqlalchemy.orm import relationship
+from app.database import Base
+
+class Winner(Base):
+    __tablename__ = "winners"
+
+    id = Column(Integer, primary_key=True, index=True)
+    event_id = Column(Integer, ForeignKey("events.id", ondelete="CASCADE"))
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    entries_won = Column(Integer, default=0)  # how many entries gave them the win
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    # Relationships
+    event = relationship("Event", back_populates="winners")
+    user = relationship("User", back_populates="wins")
