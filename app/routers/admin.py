@@ -1,7 +1,7 @@
 # app/routers/admin.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.utils.database import get_db
+from app.database import get_db
 from app.models.user import User
 from app.schemas.user import BalanceUpdate
 

@@ -40,19 +40,17 @@ def submit_prediction(payload: PredictionCreate,
         raise HTTPException(status_code=400, detail="You already submitted a prediction for this event")
 
     # 3. Deduct entry fee
-    balance = user.balance - ENTRY_FEE
-    if balance <= 0:
+    if (user.balance - ENTRY_FEE) <= 0:
         raise HTTPException(status_code=400, detail="Insufficent Balance")
     
-    user.balance -= ENTRY_FEE
-
-
-
     pred = Prediction(
         user_id=user.id,
         event_id=event.id,
         predicted_value=payload.predicted_value,
+        entries = ENTRY_FEE
     )
+    user.balance -= ENTRY_FEE
+    
     db.add(pred)
     db.add(user)
     db.commit()

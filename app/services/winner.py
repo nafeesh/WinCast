@@ -26,7 +26,7 @@ def pick_winner(event_id: int, db: Session):
     winner_id = random.choice(pool)
 
     # Need to store it somewhare otherwise every time result will alter
-    # winner = Winner(event_id=event.id, user_id=winner_id)
+    # winner = Winner(event_id=event.id, user_id=winner_id, reward=)
     # db.add(winner)
 
     # Reward winner (example: +100 points)

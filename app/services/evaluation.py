@@ -20,16 +20,12 @@ def evaluate_event(db: Session, event_id: int):
         error = abs(int(prediction.predicted_value) - int(event.correct_value))
 
         if error == 0:
-            prediction.entries = 10   # max tickets
             prediction.score = 1.0    # perfect accuracy
         elif error <= 5:  # 🔹 Example "close guess" rule
-            prediction.entries = 5
             prediction.score = 0.7
         elif error <= 10:
-            prediction.entries = 2
             prediction.score = 0.4
         else:
-            prediction.entries = 0
             prediction.score = 0.0
 
         # Update user total_score
