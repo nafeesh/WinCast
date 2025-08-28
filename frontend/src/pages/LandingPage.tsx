@@ -33,9 +33,19 @@ export default function LandingPage() {
           Get Started
         </button> */}
   
-          <button className="w-full mt-3 bg-zinc-900 px-6 py-3 rounded-full font-semibold hover:bg-zinc-800 transition">
+          <button 
+            onClick={() => navigate("/signin")}
+            className="w-full mt-3 bg-zinc-900 px-6 py-3 rounded-full font-semibold hover:bg-zinc-800 transition">
             Sign In
           </button>
+
+          <button 
+            onClick={() => navigate("/signup")}
+            className="w-full mt-3 bg-zinc-900 px-6 py-3 rounded-full font-semibold hover:bg-zinc-800 transition">
+            Sign Up
+          </button>
+
+        
         </div>
       </div>
     );

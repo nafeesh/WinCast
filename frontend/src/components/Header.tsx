@@ -15,7 +15,7 @@ function Header() {
       <div className="flex items-center gap-6">
         <Bell className="text-gray-300 cursor-pointer hover:text-white" />
         <div className="flex items-center gap-2 cursor-pointer">
-          <span className="text-sm font-medium">User123</span>
+          <span className="text-sm font-medium">Nafeesh Haider</span>
           <ChevronDown size={16} className="text-gray-400" />
         </div>
       </div>

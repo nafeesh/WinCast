@@ -1,7 +1,25 @@
 from fastapi import FastAPI
 from app.routers import auth, events, predictions, draw, leaderboard, admin
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI(title="WinCast") # win + forecast // WinCast (short, sporty, future-proof)
+
+# Allow frontend origins (update if needed)
+origins = [
+    "http://localhost:5173",  # Vite React
+    "http://localhost:3000",  # CRA React
+    "http://127.0.0.1:5173",
+    # add your deployed frontend URL later
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,        # or ["*"] for all
+    allow_credentials=True,
+    allow_methods=["*"],          # allow all methods (GET, POST, etc.)
+    allow_headers=["*"],          # allow all headers
+)
 
 # Register routers
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])
