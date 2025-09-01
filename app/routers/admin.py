@@ -13,6 +13,8 @@ def update_user_balance(data: BalanceUpdate, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
+    if user.balance is None:
+        user.balance = 0
     new_balance = user.balance + data.amount
     if new_balance < 0:
         raise HTTPException(status_code=400, detail="Insufficient balance")

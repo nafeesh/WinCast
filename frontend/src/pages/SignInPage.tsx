@@ -29,8 +29,10 @@ function SignInPage() {
       const res = await API.post("/auth/login", params, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      console.log(res.data)
+      localStorage.setItem("token", res.data.access_token);
+      localStorage.setItem("token_type", res.data.token_type);
+      localStorage.setItem("name", res.data.name);
       navigate("/dashboard");
     } catch (err: any) {
       setError(err.response?.data?.message || "Sign in failed");
@@ -66,7 +68,6 @@ function SignInPage() {
 
         {/* Sign In Button */}
         <button
-          // onClick={() => navigate("/dashboard")}
           type="submit"
           className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-90 px-6 py-3 rounded-lg text-white font-semibold"
         >

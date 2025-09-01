@@ -1,5 +1,8 @@
 import { formatDateTime } from "../utils/formatDate";
 import { Trophy } from "lucide-react"; // choose icons you like
+import { Link } from "react-router-dom";
+
+
 
 type EventProps = {
   event: {
@@ -49,9 +52,11 @@ export default function EventCard({ event }: EventProps) {
       </div>
 
       {/* CTA Button */}
-      <button className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-90 text-white py-2.5 rounded-xl font-semibold transition-all">
-        Predict Now
-      </button>
+      <Link to={`/event/${event.id}`}>
+        <button className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-90 text-white py-2.5 rounded-xl font-semibold transition-all">
+          Predict Now
+        </button>
+        </Link>
     </div>
   );
 }

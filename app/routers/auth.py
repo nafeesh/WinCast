@@ -2,11 +2,11 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.user import User
-from app.database import get_db, Base, engine
+from app.database import get_db
 from app.utils.security import hash_password, verify_password, create_access_token
-from app.schemas.user import UserCreate, UserOut
+from app.schemas.user import UserCreate, UserOut, UserResponse
 from fastapi.security import OAuth2PasswordRequestForm
-
+from app.utils.deps import get_current_user
 
 router = APIRouter()
 
@@ -34,4 +34,16 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     token = create_access_token({"sub": db_user.email})
-    return {"access_token": token, "token_type": "bearer"}
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "name": db_user.username
+        }
+
+
+@router.get("/me", response_model=UserResponse)
+def read_users_me(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    return current_user

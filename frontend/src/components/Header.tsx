@@ -2,6 +2,7 @@
 import { Bell, ChevronDown } from "lucide-react";
 
 function Header() {
+  const user = localStorage.getItem("name")
   return (
     <header className="flex items-center justify-between bg-neutral-950 p-4 shadow">
       {/* Search */}
@@ -15,7 +16,7 @@ function Header() {
       <div className="flex items-center gap-6">
         <Bell className="text-gray-300 cursor-pointer hover:text-white" />
         <div className="flex items-center gap-2 cursor-pointer">
-          <span className="text-sm font-medium">Nafeesh Haider</span>
+          <span className="text-sm font-medium">{user}</span>
           <ChevronDown size={16} className="text-gray-400" />
         </div>
       </div>

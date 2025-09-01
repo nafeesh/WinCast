@@ -1,0 +1,14 @@
+Events
+
+ Join / Predict button → trigger API call.
+
+ Show user’s joined events (maybe a separate tab later).
+
+
+UI Polish
+
+ Responsive grid for events.
+
+ Better empty states (e.g., “No events yet”).
+
+ Loading skeletons instead of plain text.

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from datetime import datetime
 from app.models.event import Event
-from app.schemas.event import EventCreate, EventOut
+from app.schemas.event import EventCreate, EventOut, EventResponse
 from app.database import get_db, Base, engine
 from app.utils.deps import get_current_user  # You can add an is_admin check later
 from app.services import evaluation
@@ -19,7 +19,7 @@ def create_event(payload: EventCreate, db: Session = Depends(get_db), _user=Depe
         title=payload.title,
         description=payload.description,
         category=payload.category,
-        options=[o.model_dump() for o in payload.options],  # store as JSON
+        options=[o for o in payload.options],  # store as JSON
         start_time=payload.start_time,
         end_time=payload.end_time,
     )
@@ -27,6 +27,7 @@ def create_event(payload: EventCreate, db: Session = Depends(get_db), _user=Depe
     db.commit()
     db.refresh(new_event)
     return new_event
+
 
 @router.get("/", response_model=list[EventOut])
 def list_events(db: Session = Depends(get_db)):
@@ -54,3 +55,9 @@ def close_event(event_id: int, correct_value: str, db: Session = Depends(get_db)
     return event
 
 
+@router.get("/event/{event_id}", response_model=EventResponse)
+def get_event(event_id: int, db: Session = Depends(get_db)):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    return event

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import EventList from "./components/EventList";
+import MyEventList from "./components/MyEventList";
 import LandingPage from "./pages/LandingPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -46,6 +47,17 @@ function App() {
               <>
                 <h1 className="text-2xl font-bold mb-4">Live Events</h1>
                 <EventList />
+              </>
+            }
+          />
+
+          {/* Events list */}
+          <Route
+            path="/dashboard/my-events"
+            element={
+              <>
+                <h1 className="text-2xl font-bold mb-4">My Events</h1>
+                <MyEventList />
               </>
             }
           />

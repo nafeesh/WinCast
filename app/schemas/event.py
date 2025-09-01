@@ -30,3 +30,17 @@ class EventOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+
+class EventResponse(BaseModel):
+    id: int
+    title: str
+    description: str | None
+    category: str
+    start_time: datetime
+    end_time: datetime
+    options: list[str|int] = []
+
+    class Config:
+        from_attributes = True

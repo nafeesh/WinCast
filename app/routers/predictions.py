@@ -13,7 +13,7 @@ router = APIRouter()
 ENTRY_FEE = 10  # flat fee
 
 
-@router.post("/", response_model=PredictionCreate, status_code=status.HTTP_201_CREATED)
+@router.post("/predict", response_model=PredictionCreate, status_code=status.HTTP_201_CREATED)
 def submit_prediction(payload: PredictionCreate, 
                       db: Session = Depends(get_db),
                       user: User = Depends(get_current_user)):
@@ -28,7 +28,8 @@ def submit_prediction(payload: PredictionCreate,
 
     # Validate option exists 
     # This logic needs to be improve it shpuld allow predictions if event has no option kind
-    valid_keys = {opt["key"] for opt in event.options}
+    # valid_keys = {opt["key"] for opt in event.options}
+    valid_keys = {opt for opt in event.options}
     if payload.predicted_value not in valid_keys:
         raise HTTPException(status_code=400, detail="Invalid predictions for this event")
 
