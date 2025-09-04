@@ -16,6 +16,7 @@ interface Prediction {
     category: string;
     start_time: string;
     end_time: string;
+    correct_value: string | number;
   };
 }
 

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from datetime import datetime
 from app.models.event import Event
+from app.models.winner import Winner
 from app.schemas.event import EventCreate, EventOut, EventResponse
 from app.database import get_db, Base, engine
 from app.utils.deps import get_current_user  # You can add an is_admin check later
@@ -58,6 +59,13 @@ def close_event(event_id: int, correct_value: str, db: Session = Depends(get_db)
 @router.get("/event/{event_id}", response_model=EventResponse)
 def get_event(event_id: int, db: Session = Depends(get_db)):
     event = db.query(Event).filter(Event.id == event_id).first()
+    # event = (
+    #     db.query(Event)
+    #     .join(Winner, Event.id == Winner.event_id)
+    #     .filter(Event.id == event_id)
+    #     .first()
+    # )
+    # print("==========================>", event.winner)
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")
     return event

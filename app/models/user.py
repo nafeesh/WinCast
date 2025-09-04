@@ -10,9 +10,9 @@ class User(Base):
     username = Column(String, unique=True, index=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)
-
-    predictions = relationship("Prediction", back_populates="user")
-
     total_score = Column(Float, default=0.0)  # cumulative score across predictions
     balance = Column(Float, default=0.0)
+
+    predictions = relationship("Prediction", back_populates="user")
+    winner = relationship("Winner", back_populates="user")
 

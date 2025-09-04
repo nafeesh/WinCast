@@ -12,6 +12,7 @@ type EventProps = {
     category: string;
     end_time: string;
     start_time: string;
+    correct_value: string | number;
     options?: [];
   };
   prediction?: {
@@ -55,6 +56,9 @@ export default function EventCard({ event, prediction  }: EventProps) {
         <div className="mt-3 p-2 rounded-lg bg-gray-800 text-sm">
           <p className="text-blue-400">
             Your Prediction: {prediction.predicted_value}
+          </p>
+          <p className="text-blue-400">
+            Correct Prediction : {event.correct_value}
           </p>
           {prediction.is_correct !== null && (
             <p

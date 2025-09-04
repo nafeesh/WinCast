@@ -18,6 +18,6 @@ class Event(Base):
     is_closed = Column(Boolean, default=False)
 
     predictions = relationship("Prediction", back_populates="event")
-    correct_value = Column(String, nullable=True)  # ✅ store outcome
-    # winners = relationship("Winner", back_populates="event", cascade="all, delete")
+    correct_value = Column(String, nullable=True) 
+    winner = relationship("Winner", back_populates="event")
 

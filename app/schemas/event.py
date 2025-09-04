@@ -1,4 +1,3 @@
-from multiprocessing import Value
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -33,6 +32,12 @@ class EventOut(BaseModel):
 
 
 
+class WinnerResponse(BaseModel):
+    
+    class Config:
+        from_attributes = True
+    
+
 class EventResponse(BaseModel):
     id: int
     title: str
@@ -41,6 +46,9 @@ class EventResponse(BaseModel):
     start_time: datetime
     end_time: datetime
     options: list[str|int] = []
+
+    is_closed: bool
+    # winners: WinnerResponse
 
     class Config:
         from_attributes = True

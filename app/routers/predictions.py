@@ -61,7 +61,6 @@ def submit_prediction(payload: PredictionCreate,
 
 @router.get("/me", response_model=list[PredictionOut])
 def my_predictions(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    # return db.query(Prediction).filter(Prediction.user_id == user.id)
     my_predictions = (
         db.query(Prediction)
         .join(Event, Event.id == Prediction.event_id)

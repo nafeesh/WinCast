@@ -12,5 +12,5 @@ class Winner(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships
-    event = relationship("Event", back_populates="winners")
-    user = relationship("User", back_populates="wins")
+    event = relationship("Event", back_populates="winner")
+    user = relationship("User", back_populates="winner")

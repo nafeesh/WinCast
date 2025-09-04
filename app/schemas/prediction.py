@@ -1,3 +1,5 @@
+from optparse import Option
+from typing import Any
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -9,6 +11,7 @@ class EventBase(BaseModel):
     category: str
     start_time: datetime
     end_time: datetime
+    correct_value: str | int
 
     class Config:
         from_attributes = True
@@ -24,7 +27,7 @@ class PredictionOut(BaseModel):
     predicted_value: str | int
     submitted_at: datetime
     is_correct: int | None = None
-    score: int | None = None
+    score: float | None = None
     event: EventBase   
 
 

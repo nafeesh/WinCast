@@ -21,12 +21,16 @@ def evaluate_event(db: Session, event_id: int):
 
         if error == 0:
             prediction.score = 1.0    # perfect accuracy
+            prediction.is_correct = True
         elif error <= 5:  # 🔹 Example "close guess" rule
             prediction.score = 0.7
+            prediction.is_correct = True
         elif error <= 10:
             prediction.score = 0.4
+            prediction.is_correct = False
         else:
             prediction.score = 0.0
+            prediction.is_correct = False
 
         # Update user total_score
         prediction.user.total_score += prediction.score
