@@ -64,7 +64,7 @@ def my_predictions(db: Session = Depends(get_db), user: User = Depends(get_curre
     my_predictions = (
         db.query(Prediction)
         .join(Event, Event.id == Prediction.event_id)
-        .filter(Prediction.user_id == User.id)
+        .filter(Prediction.user_id == user.id)
         .all()
     )
     return my_predictions

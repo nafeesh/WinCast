@@ -2,3 +2,4 @@ alembic
 alembic.ini
 
 **.pyc
+app/notebook/create_event.ipynb

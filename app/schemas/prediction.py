@@ -11,7 +11,7 @@ class EventBase(BaseModel):
     category: str
     start_time: datetime
     end_time: datetime
-    correct_value: str | int
+    correct_value: str | int | None
 
     class Config:
         from_attributes = True

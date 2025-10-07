@@ -32,8 +32,12 @@ def create_event(payload: EventCreate, db: Session = Depends(get_db), _user=Depe
 
 @router.get("/", response_model=list[EventOut])
 def list_events(db: Session = Depends(get_db)):
-    # Only open or all? For now, return all.
-    return db.query(Event).order_by(Event.start_time.desc()).all()
+    return db.query(Event).filter(Event.is_closed == False).order_by(Event.start_time.desc()).all()
+
+
+@router.get("/results", response_model=list[EventOut])
+def list_events(db: Session = Depends(get_db)):
+    return db.query(Event).filter(Event.is_closed == True).order_by(Event.start_time.desc()).all()
 
 
 @router.post("/{event_id}/close", response_model=EventOut)

@@ -8,6 +8,7 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ProfilePage from "./pages/ProfilePage";
 import EventDetailsPage from "./pages/EventDetailsPage";
+import ResultsList from "./components/ResultsList";
 
 function DashboardLayout() {
   return (
@@ -58,6 +59,15 @@ function App() {
               <>
                 <h1 className="text-2xl font-bold mb-4">My Events</h1>
                 <MyEventList />
+              </>
+            }
+          />
+          <Route
+            path="/dashboard/results"
+            element={
+              <>
+                <h1 className="text-2xl font-bold mb-4">Results</h1>
+                <ResultsList />
               </>
             }
           />

@@ -106,21 +106,15 @@ npm run dev
 
 
 
-🔐 Authentication
-
-JWT-based login system
-Authorization: Bearer <token> required for protected routes
-Token stored in localStorage on frontend
-
-
-
-🏁 Upcoming Development
-🥇 Winner Table integration in Leaderboard & Event Details page
-📊 Admin Dashboard
-📨 Email notifications for winners
-💰 Reward distribution module
-
-
 Nafeesh Haider
 💼 LinkedIn -> [LinkedIn](https://www.linkedin.com/in/nafeex/)
 🌐 GitHub ->[GitHub](https://github.com/nafeesh)
+
+
+
+🏁 Upcoming Development & TODO
+- After Pridict Now button Click It should change Pridiciont or disable
+- Winner Table integration in Leaderboard
+- Admin Dashboard
+- Email notifications for winners
+- LLM Integration for Event generations

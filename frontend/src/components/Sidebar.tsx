@@ -33,6 +33,7 @@ const Sidebar = () => {
             <Search size={20} /> My Events
           </button>
 
+
           <button onClick={() => navigate("/profile")} className={menuItemClass}>
             <User size={20} /> Profile
           </button>
@@ -41,8 +42,8 @@ const Sidebar = () => {
             <Bookmark size={20} /> Saved
           </button>
 
-          <button onClick={() => navigate("/dashboard/downloads")} className={menuItemClass}>
-            <Download size={20} /> Downloads
+          <button onClick={() => navigate("/dashboard/results")} className={menuItemClass}>
+            <Search size={20} /> Results
           </button>
         </nav>
 
