@@ -59,13 +59,20 @@ def close_event(event_id: int, correct_value: str, db: Session = Depends(get_db)
 @router.get("/event/{event_id}", response_model=EventResponse)
 def get_event(event_id: int, db: Session = Depends(get_db)):
     event = db.query(Event).filter(Event.id == event_id).first()
-    # event = (
-    #     db.query(Event)
-    #     .join(Winner, Event.id == Winner.event_id)
-    #     .filter(Event.id == event_id)
-    #     .first()
-    # )
-    # print("==========================>", event.winner)
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")
-    return event
+
+    # is_closed = datetime() > event.end_time
+
+    return EventResponse(
+        id=event.id,
+        title=event.title,
+        description=event.description,
+        category=event.category,
+        start_time=event.start_time,
+        end_time=event.end_time,
+        options=event.options,
+        is_closed=event.is_closed,
+        winners=event.winner   # SQLAlchemy → Pydantic handles nested serialization
+    )
+    

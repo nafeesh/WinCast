@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
+
 class EventOption(BaseModel):
     key: str       # e.g., "A"
     label: str     # e.g., "271–290 runs"
@@ -15,6 +16,7 @@ class EventCreate(BaseModel):
     options: list[int]   # JSON string or comma-separated values
     start_time: datetime
     end_time: datetime
+
 
 class EventOut(BaseModel):
     id: int
@@ -32,8 +34,20 @@ class EventOut(BaseModel):
 
 
 
+class UserResponse(BaseModel):
+    id: int
+    name: str
+    score: float | None = None   # if you want score inside user
+
+    class Config:
+        from_attributes = True
+
+
 class WinnerResponse(BaseModel):
-    
+    id: int
+    reward: float
+    user: UserResponse   # 👈 nested user object
+
     class Config:
         from_attributes = True
     
@@ -48,7 +62,7 @@ class EventResponse(BaseModel):
     options: list[str|int] = []
 
     is_closed: bool
-    # winners: WinnerResponse
+    winner: list[WinnerResponse] = []
 
     class Config:
         from_attributes = True
